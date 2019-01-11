@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<h1>Map</h1>
+<p>
+<div id="map" class="box">
+</div>
+</p>
+
+<button id="myButton"  onclick="North()">North btn</button>
+<button id="myButton1"  onclick="West()">West btn</button>
+<button id="myButton2"  onclick="East()">East btn</button>
+<button id="myButton3"  onclick="South()">South btn</button>
+<button id="backButton" " onclick="Back()">Back btn</button>
+
+</div>
+
+<style>
+h1{
+	color:blue;
+}
+</style>
+<script>
+var zoomed = {"z": 0, "x": 0, "y": 0};
+
+
+
+//disabling the buttons for lims 
+function btn() 
+{
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if(parseZ == 0) {
+document.getElementById("myButton").disabled = true;
+document.getElementById("myButton1").disabled = true;
+document.getElementById("myButton2").disabled = true;
+document.getElementById("myButton3").disabled = true;
+document.getElementById("backButton").disabled = true;
+}
+}
+
+
+
+
+
+// go south 
+
+function South()
+{
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if((Math.pow(2, parseZ) - 1) > parseY)
+{
+parseY++;
+window.location.assign("streetmap.html?z=" + parseZ + "&x=" + parseX + "&y=" + parseY);
+}
+else 
+{
+window.alert("limit")
+}
+}
+
+
+//go west 
+
+
+function West()
+{
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if(parseX > 0)
+{
+parseX--;
+window.location.assign("streetmap.html?z=" + parseZ + "&x=" + parseX + "&y=" + parseY);
+}
+else 
+{
+window.alert("limit")
+}
+}
+
+// go north 
+
+function North()
+{
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if(parseY > 0)
+{
+parseY--;
+window.location.assign("streetmap.html?z=" + parseZ + "&x=" + parseX + "&y=" + parseY);
+}
+else 
+{
+window.alert("limit")
+}
+}
+
+
+//go east 
+
+function East()
+{
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if((Math.pow(2, parseZ) - 1) > parseX)
+{
+parseX++;
+window.location.assign("streetmap.html?z=" + parseZ + "&x=" + parseX + "&y=" + parseY);
+}
+else 
+{
+window.alert("limit")
+}
+}
+
+
+
+// zoom top right 
+function tRight() 
+{
+if (zoomed["z"] < 16) 
+{
+zoomed["z"] = parseInt(zoomed["z"]) + 1;
+if(zoomed["z"] == 1)
+{
+zoomed["x"] = parseInt(zoomed["x"]) + 1;
+}
+else
+{
+zoomed["x"] = 2*parseInt(zoomed["x"]) + 1;
+zoomed["y"] = 2*parseInt(zoomed["y"]);
+}
+
+window.location.assign("./streetmap.html?z=" + zoomed["z"] + "&x=" + zoomed["x"] + "&y=" + zoomed["y"]);
+}
+}
+
+
+// zoom top left 
+function tLeft() 
+{
+
+if (zoomed["z"] < 16) 
+{
+
+zoomed["z"] = parseInt(zoomed["z"]) + 1;
+if(zoomed["z"] == 1){}
+
+else
+{
+zoomed["x"] = 2*parseInt(zoomed["x"]);
+zoomed["y"] = 2*parseInt(zoomed["y"]);
+}
+
+console.log(zoomed);
+window.location.assign("./streetmap.html?z=" + zoomed["z"] + "&x=" + zoomed["x"] + "&y=" + zoomed["y"]);
+}
+}
+
+// zoom btm right 
+function bRight() 
+{
+if (zoomed["z"] < 16) 
+{
+zoomed["z"] = parseInt(zoomed["z"]) + 1;
+if(zoomed["z"] == 1)
+{
+zoomed["x"] = parseInt(zoomed["x"]) + 1;
+zoomed["y"] = parseInt(zoomed["y"]) + 1;
+}
+else
+{
+zoomed["x"] = 2*parseInt(zoomed["x"]) + 1;
+zoomed["y"] = 2*parseInt(zoomed["y"]) + 1;
+}
+
+window.location.assign("./streetmap.html?z=" + zoomed["z"] + "&x=" + zoomed["x"] + "&y=" + zoomed["y"]);
+}
+}
+
+
+
+
+// zoom btm left 
+function bLeft() 
+{
+if (zoomed["z"] < 16) 
+{
+zoomed["z"] = parseInt(zoomed["z"]) + 1;
+if(zoomed["z"] == 1)
+{
+zoomed["y"] = parseInt(zoomed["y"]) + 1;
+}
+else
+{
+zoomed["x"] = 2*parseInt(zoomed["x"]);
+zoomed["y"] = 2*parseInt(zoomed["y"]) + 1;
+}
+
+window.location.assign("./streetmap.html?z=" + zoomed["z"] + "&x=" + zoomed["x"] + "&y=" + zoomed["y"]);
+}
+}
+
+
+
+//go back to prev view 
+function Back() {
+var parseX = parseInt(zoomed["x"]);
+var parseY = parseInt(zoomed["y"]);
+var parseZ = parseInt(zoomed["z"]);
+
+if (parseZ > 0 && parseX > parseY) {
+parseX = Math.floor(parseX/2);
+	if (parseY > 0) 
+	parseY = Math.floor(parseY/2);
+	parseZ--;
+	}
+	else if (parseZ > 0 && parseY > parseX) {
+	parseY = Math.floor(parseY/2);
+
+	if (parseX > 0) 
+	parseX = Math.floor(parseX/2);
+	parseZ--;
+	}
+
+	else if (parseZ > 0 && parseX == parseY) {
+	
+	if (parseY > 0)
+	parseY = Math.floor(parseY/2);
+
+	if (parseX > 0)
+	parseX = Math.floor(parseX/2);
+
+	parseZ--;
+	}
+
+	else if (parseZ == 0)
+	{
+	window.alert("limit")
+	}
+
+
+	else if (parseZ > 0) {
+	parseZ--;
+	}
+
+window.location.assign("streetmap.html?z=" + parseZ + "&x=" + parseX + "&y=" + parseY);
+}
+
+// producing the map 
+
+function map()
+{
+
+
+if(location.search == "")
+{
+
+	
+document.getElementById("map").innerHTML = 
+'<img src="http://b.tile.openstreetmap.org/' + zoomed["z"] + '/' + zoomed["x"] + '/' + zoomed["y"] + '.png" width="256" height="256" usemap="#quart">' +
+'<map name="quart">' +
+'<area shape="rect" coords="0,0,128,128" href="./streetmap.html?z=' + zoomed["z"] + '&x=' + zoomed["x"] + '&y=' + zoomed["y"] + '" onclick="tLeft(zoomed["z"], zoomed["x"], zoomed["y"])">' +
+'<area shape="rect" coords="128,0,256,128" href="./streetmap.html?z=' + zoomed["z"] + '&x=' + zoomed["x"] + '&y=' + zoomed["y"] + '" onclick="bLeft(zoomed["z"], zoomed["x"], zoomed["y"])">' +
+
+'<area shape="rect" coords="0,256,128,128" href="./streetmap.html?z=' + zoomed["z"] + '&x=' + zoomed["x"] + '&y=' + zoomed["y"] + '" onclick="tRight(zoomed["z"], zoomed["x"], zoomed["y"])">' +
+'<area shape="rect" coords="256,256,128,128" href="./streetmap.html?z=' + zoomed["z"] + '&x=' + zoomed["x"] + '&y=' + zoomed["y"] + '" onclick="bRight(zoomed["z"], zoomed["x"], zoomed["y"])">' +
+'</map>';
+}
+
+// mod coors 
+else
+{
+zoomed["z"] = location.search.split("&")[0].replace("?", "").split("=")[1];
+zoomed["x"] = location.search.split("&")[1].replace("?", "").split("=")[1];
+zoomed["y"] = location.search.split("&")[2].replace("?", "").split("=")[1];
+document.getElementById("map").innerHTML = 
+'<img src="http://b.tile.openstreetmap.org/' + zoomed["z"] + '/' + zoomed["x"] + '/' + zoomed["y"] + '.png" width="256" height="256" usemap="#quart">' +
+'<map name="quart">' +
+'<area shape="rect" coords="0,0,128,128" onclick="tLeft()">' +
+'<area shape="rect" coords="128,0,256,128" onclick="tRight()">' +
+'<area shape="rect" coords="0,256,128,128" onclick="bLeft()">' +
+'<area shape="rect" coords="256,256,128,128" onclick="bRight()">' +
+'</map>';
+}
+}
+map();
+console.log(zoomed);
+
+</script>
+</body>
+
+</html>
